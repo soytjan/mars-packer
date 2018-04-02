@@ -132,7 +132,20 @@ describe('API Routes', () => {
   })
 
   describe('DELETE /api/v1/items/:id', () => {
-  
+    it('should delete item associated with id', () => {
+      return chai.request(server)
+        .delete('/api/v1/items/2')
+        .then(response => {
+          response.should.have.status(202);
+          response.should.be.json;
+          response.body.should.be.a('object');
+          response.body.should.have.property('numDeleted');
+          response.body.numDeleted.should.equal(1);
+        })
+        .catch(error => {
+          throw error;
+        })
+    })
   })
 
   describe('PUT /api/v1/items/:id', () => {
