@@ -84,6 +84,19 @@ app.delete('/api/v1/items/:id', (request, response) => {
     })
 })
 
+app.put('/api/v1/items/:id', (request, response) => {
+  const { id } = request.params;
+  const itemInfo = request.body.item;
+
+  database('items').where('id', id).update({...itemInfo})
+    .then(() => {
+      response.status(201).json({...itemInfo})
+    })
+    .catch(error => {
+      response.status(500).json({ error: 'Can only accept name and packed as keys'})
+    })
+})
+
 app.listen(app.get('port'), () => {
   console.log(`${app.locals.title} server running on port 3000.`)
 });
