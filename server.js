@@ -59,6 +59,18 @@ app.post('/api/v1/items', (request, response) => {
     })
 })
 
+app.delete('/api/v1/items/:id', (request, response) => {
+  const { id } = request.params;
+
+  database('items').where('id', id).del()
+    .then(deleted => {
+      response.status(202).json({ numDeleted: deleted });
+    })
+    .catch( error => {
+      response.status(500).json({ error });
+    })
+})
+
 app.listen(app.get('port'), () => {
   console.log(`${app.locals.title} server running on port 3000.`)
 });
