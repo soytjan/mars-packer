@@ -1,0 +1,54 @@
+*, 
+body {
+  font-family: 'Open Sans', sans-serif; 
+  font-size: 16px;
+}
+
+h1 {
+  padding: 30px;
+  text-align: center;
+  font-size: 2em;
+  font-weight: 600;
+}
+
+form {
+  padding: 20px;
+  text-align: center;
+}
+
+button {
+  padding: 5px 10px;
+  border: 1px solid black;
+  background-color: none;
+  box-shadow: 2px 2px 3px purple;
+}
+
+#form__input-item {
+  padding: 5px;
+}
+
+.list__section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.list__card {
+  border: 1px solid black;
+  width: 300px;
+  padding: 25px 15px;
+  margin: 20px;
+  box-shadow: 2px 2px 3px gray;
+}
+
+.list__card-heading-cont {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  margin-bottom: 25px;
+  align-items: center;
+}
+
+.list__card-h3 {
+  font-size: 1.3em;
+  font-weight: 600;
+}
