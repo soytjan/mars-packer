@@ -40,7 +40,7 @@ const appendItem = item => {
   $('.list__section').append(`
     <article id=${id} class="list__card">
       <div class="list__card-heading-cont">
-        <h3 class="List__card-h3">${name}</h3>
+        <h3 class="list__card-h3">${name}</h3>
         <button class="list__card-delete">Delete</button>
       </div>
       <input id='packed-${id}' class='list__card-checkbox' type="checkbox" value="Packed" ${isChecked}>
