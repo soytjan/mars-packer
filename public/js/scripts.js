@@ -1,6 +1,6 @@
 $(window).on('load', () => handlePageLoad())
 $('#form__button-submit').on('click', (e) => handleSubmit(e));
-// event listener for adding item to list (POST)
+$('.list__section').on('click', '.list__card .list__card-heading-cont .list__card-delete', handleDelete);
 // event listener for delete button// event listener for packed checkbox
 
 // Event Handlers
@@ -17,7 +17,14 @@ const handleSubmit = async (e) => {
   $('#form__input-item').val('');
 }
 
-const handleDelete = () => {
+function handleDelete() {
+  const itemId = this.closest('.list__card').id;
+
+  this.closest('.list__card').remove();
+  deleteItem(itemId);
+}
+
+const handleCheck() {
 
 }
 
@@ -70,4 +77,19 @@ const postItem = async (item) => {
   };
   const response = await fetch('/api/v1/items', fetchBody);
   return await response.json();
+}
+
+const deleteItem = async (itemId) => {
+  const fetchBody = {
+    method: 'DELETE',
+    header: {
+      'Content-Type': 'application/json'
+    }
+  }
+  try {
+    const response = await fetch(`/api/v1/items/${itemId}`, fetchBody);
+    return await response.json();
+  } catch (error) {
+    console.error(error);
+  }
 }
