@@ -6,7 +6,7 @@ const itemData = [
 
 const createItem = (knex, item) => {
   const { name, packed } = item;
-console.log('name', name, 'packed', packed);
+
   return knex('items').insert({
     name,
     packed
