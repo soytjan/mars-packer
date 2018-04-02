@@ -1,3 +1,4 @@
+
 const itemData = [
   {name: 'Oxygen', packed: false},
   {name: 'Bandana', packed: true},
@@ -12,7 +13,6 @@ const createItem = (knex, item) => {
     packed
   }, 'id')
 }
-
 
 exports.seed = function(knex, Promise) {
   return knex('items').del()
