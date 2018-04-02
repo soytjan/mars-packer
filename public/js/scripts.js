@@ -1,7 +1,8 @@
 $(window).on('load', () => handlePageLoad())
 $('#form__button-submit').on('click', (e) => handleSubmit(e));
 $('.list__section').on('click', '.list__card .list__card-heading-cont .list__card-delete', handleDelete);
-// event listener for delete button// event listener for packed checkbox
+// event listener for packed checkbox
+$('.list__section').on('click', '.list__card .list__card-checkbox', handleCheck);
 
 // Event Handlers
 const handlePageLoad = () => {
@@ -24,8 +25,11 @@ function handleDelete() {
   deleteItem(itemId);
 }
 
-const handleCheck() {
+function handleCheck() {
+  const isChecked = this.checked;
+  const itemId = this.closest('.list__card').id;
 
+  putItem(itemId, isChecked);
 }
 
 // DOM 
@@ -39,7 +43,7 @@ const appendItem = item => {
         <h3 class="List__card-h3">${name}</h3>
         <button class="list__card-delete">Delete</button>
       </div>
-      <input id='packed-${id}' type="checkbox" value="Packed" ${isChecked}>
+      <input id='packed-${id}' class='list__card-checkbox' type="checkbox" value="Packed" ${isChecked}>
       <label for='packed-${id}'>Packed</label>
     </article>
   `)
@@ -86,6 +90,28 @@ const deleteItem = async (itemId) => {
       'Content-Type': 'application/json'
     }
   }
+  try {
+    const response = await fetch(`/api/v1/items/${itemId}`, fetchBody);
+    return await response.json();
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+const putItem = async (itemId, isPacked) => {
+  const updatedItem = JSON.stringify({ 
+    item: {
+     packed: isPacked
+    }
+  })
+  const fetchBody = {
+    method: 'PUT',
+    body: updatedItem,
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  };
+
   try {
     const response = await fetch(`/api/v1/items/${itemId}`, fetchBody);
     return await response.json();
