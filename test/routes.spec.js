@@ -149,6 +149,40 @@ describe('API Routes', () => {
   })
 
   describe('PUT /api/v1/items/:id', () => {
-  
+    it('should update item associated with id', () => {
+      return chai.request(server)
+        .put('/api/v1/items/1')
+        .send({
+          item: {
+            name: "Plants"
+          }
+        })
+        .then(response => {
+          response.should.have.status(201);
+          response.body.should.be.a('object');
+          response.body.should.have.property('name');
+          response.body.name.should.equal('Plants');
+        })
+        .catch(error => {
+          throw error;
+        })
+    })
+
+    it('should return an error message if sent object includes invalid key', () => {
+      return chai.request(server)
+        .put('/api/v1/items/1')
+        .send({
+          item: {
+            name: "Plants",
+            color: "green"
+          }
+        })
+        .then(response => {
+          response.should.have.status(500);
+          response.body.should.be.a('object');
+          response.body.should.have.property('error');
+          response.body.error.should.equal('Can only accept name and packed as keys')
+        })
+    })
   })
 })
