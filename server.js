@@ -39,6 +39,26 @@ app.get('/api/v1/items', (request, response) => {
     });
 });
 
+app.post('/api/v1/items', (request, response) => {
+  const itemInfo = request.body.item;
+
+  for (let requiredParam of ['name', 'packed']) {
+    if (!itemInfo[requiredParam]) {
+      return response
+        .status(422)
+        .send({ error: `You're missing a "${requiredParam}"`})
+    }
+  }
+
+  database('items').insert(itemInfo, 'id')
+    .then( itemId => {
+      response.status(201).json({ ...itemInfo, id: itemId[0] })
+    })
+    .catch( error => {
+      response.status(500).json({ error: `Can only accept { name: <String>, packed: <Boolean> }` })
+    })
+})
+
 app.listen(app.get('port'), () => {
   console.log(`${app.locals.title} server running on port 3000.`)
 });
