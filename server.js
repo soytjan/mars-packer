@@ -39,6 +39,18 @@ app.get('/api/v1/items', (request, response) => {
     });
 });
 
+app.get('/api/v1/items/:id', (request, response) => {
+  const { id } = request.params;
+
+  database('items').where('id', id).select()
+    .then( item => {
+      response.status(200).json(item)
+    })
+    .catch( error => {
+      response.status(500).json({ error })
+    })
+})
+
 app.post('/api/v1/items', (request, response) => {
   const itemInfo = request.body.item;
 
